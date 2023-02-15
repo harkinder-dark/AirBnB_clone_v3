@@ -28,7 +28,7 @@ import sys
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, root_path)
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -42,6 +42,9 @@ def teardown(exc):
     """closing"""
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
     HBNB_API_HOST = getenv('HBNB_API_HOST')
