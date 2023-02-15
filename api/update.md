@@ -6,3 +6,5 @@
 * I fixed small syntax error on line 85 in models/engine/file_storage.py (I added the missing brackets)
 
 * I added project root to the path of app.py because I was getting "Module not found" error for models whenever I try to run app.py
+
+* sorry, I only check after I finish everything :)
