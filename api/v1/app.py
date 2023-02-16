@@ -21,12 +21,12 @@ Create a folder v1 inside api:
             threaded=True
 """
 
-import os
-import sys
+#import os
+#import sys
 
 # Add the root directory to the Python path
-root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-sys.path.insert(0, root_path)
+#root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+#sys.path.insert(0, root_path)
 
 from flask import Flask, jsonify, make_response
 from models import storage

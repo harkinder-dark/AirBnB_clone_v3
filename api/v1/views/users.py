@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Create a new view for User object
 Retrieves the list of all User objects

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Create a new view for Amenity
 Retrieves the list of all Amenity objects

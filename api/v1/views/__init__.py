@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Create a folder views inside v1:
 create a file __init__.py:
