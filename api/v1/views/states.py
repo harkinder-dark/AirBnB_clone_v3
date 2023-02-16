@@ -70,8 +70,7 @@ def put_states(state_id):
     if not chnew:
         abort(400, "Not a JSON")
     for key, val in chnew:
-        if key != 'id' or 'key' != 'created_at'
-           or 'key' != 'updated_at':
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(stateid, key, val)
     storage.save()
     return make_response(jsonify(stateid.to_dict()), 200)

@@ -1,4 +1,10 @@
 """
+Create a new view for Amenity
+Retrieves the list of all Amenity objects
+Retrieves a Amenity object
+Deletes a Amenity object:
+Creates a Amenity:
+Updates a Amenity objec
 """
 from flask import Flask, jsonify
 from api.v1.views import app_views

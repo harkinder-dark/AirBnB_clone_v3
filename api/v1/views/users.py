@@ -1,4 +1,10 @@
 """
+Create a new view for User object
+Retrieves the list of all User objects
+Retrieves a User object
+Deletes a User object
+Creates a User
+Updates a User object
 """
 from flask import Flask, jsonify
 from api.v1.views import app_views
@@ -57,5 +63,15 @@ def post_users():
 @app_views.route('/users/<user_id>', method=['PUT'],
                  strict_slashes=False)
 def put_user(user_id):
-    """"""
-    pass
+    """modified"""
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404)
+    new_user = request.get_json()
+    if not new_user:
+        abort(400, "Not a JSON")
+    for key, val in new_user:
+        if key not in ['id', 'email', 'created_at', 'updated_at']:
+            setattr(user, key, val)
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)

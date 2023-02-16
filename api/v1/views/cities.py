@@ -76,8 +76,7 @@ def put_city(city_id):
     if not chcity:
         abort(400, "Not a JSON")
     for key, val in chcity:
-        if key != 'id' or 'key' != 'created_at'
-           or 'key' != 'updated_at' or 'key' != 'state_id':
+        if key not in ['id', 'created_at', 'updated_at', 'state_id']:
             setattr(citie, key, val)
     storage.save()
     return make_response(jsonify(citie.to_dict()), 200)
