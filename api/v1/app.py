@@ -20,14 +20,6 @@ Create a folder v1 inside api:
                                                 if not defined
             threaded=True
 """
-
-#import os
-#import sys
-
-# Add the root directory to the Python path
-#root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-#sys.path.insert(0, root_path)
-
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
@@ -82,3 +74,4 @@ if __name__ == "__main__":
     port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
 
     app.run(host=host, port=port, threaded=True)
+
