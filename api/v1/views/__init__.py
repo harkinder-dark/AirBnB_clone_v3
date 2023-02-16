@@ -1,14 +1,6 @@
 #!/usr/bin/python3
 """
-Create a folder views inside v1:
-create a file __init__.py:
-    import Blueprint from flask doc
-    create a variable app_views which is an instance
-            of Blueprint (url prefix must be /api/v1)
-    wildcard import of everything in the package
-        api.v1.views.index => PEP8 will complain about it,
-        don’t worry, it’s normal and this file
-        (v1/views/__init__.py) won’t be check.
+Create a folder views inside v1
 """
 from flask import Blueprint
 
@@ -23,4 +15,3 @@ from api.v1.views.users import *
 from api.v1.views.places import *
 from api.v1.views.places_reviews import *
 from api.v1.views.places_amenities import *
-
