@@ -91,13 +91,14 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """test for get function"""
         clss = BaseModel()
-        clss.new()
-        self.assertTrue(DBStorage.get(clss, clss.id) is not None)
+        clss.save()
+        self.assertTrue(models.storage.get(clss, clss.id) is not None)
         clss.delete()
-        self.assertTrue(DBStorage.get(clss, clss.id) is None)
+        self.assertTrue(models.storage.get(clss, clss.id) is None)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test for count function"""
-        assertEqual(DBStorage.count(), len(DBStorage.all()))
-        assertEqual(DBStorage.count(State), len(DBStorage.all(State)))
+        assertEqual(models.torage.count(), len(models.storage.all()))
+        assertEqual(models.storage.count(State),
+                    len(models.storage.all(State)))
