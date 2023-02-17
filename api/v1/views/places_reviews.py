@@ -83,7 +83,8 @@ def put_review(review_id):
     if not chrev:
         abort(400, "Not a JSON")
     for key, val in chrev:
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id',
+                       'created_at', 'updated_at']:
             setattr(review, key, val)
     storage.save()
     return make_response(jsonify(review.to_dict()), 200)
