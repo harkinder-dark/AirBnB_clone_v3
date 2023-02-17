@@ -5,7 +5,6 @@ DELETE
 POST
 PUT
 """
-
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
@@ -21,7 +20,7 @@ from flask import request
                  strict_slashes=False)
 def get_places(city_id):
     """get all Place to city"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
     return jsonify([obj.to_dict() for obj in city.places])
@@ -31,7 +30,7 @@ def get_places(city_id):
                  strict_slashes=False)
 def placeid(place_id):
     """get place element"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if not place:
         abort(404)
     return jsonify(place.to_dict())
@@ -41,7 +40,7 @@ def placeid(place_id):
                  strict_slashes=False)
 def del_place(place_id):
     """delete place element"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if not place:
         abort(404)
     place.delete()
@@ -53,7 +52,7 @@ def del_place(place_id):
                  strict_slashes=False)
 def post_place(city_id):
     """post place to city"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
     new_place = request.get_json()
@@ -62,7 +61,7 @@ def post_place(city_id):
     if 'user_id' not in new_place:
         abort(400, "Missing user_id")
     user_id = new_place['user_id']
-    if not storage.get(User, user_id):
+    if not storage.get("User", user_id):
         abort(404)
     if 'name' not in new_place:
         abort(400, "Missing name")
@@ -77,7 +76,7 @@ def post_place(city_id):
                  strict_slashes=False)
 def put_place(place_id):
     """modified"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if not place:
         abort(404)
     chplace = request.get_json()
@@ -105,3 +104,48 @@ def places_search():
     ):
         places = storage.all(Place)
     return jsonify([place.to_dict() for place in palces.values()])
+    places = []
+    if body_r.get('states'):
+        states = [storage.get("State", id) for id in body_r.get('states')]
+
+        for state in states:
+            for city in state.cities:
+                for place in city.places:
+                    places.append(place)
+
+    if body_r.get('cities'):
+        cities = [storage.get("City", id) for id in body_r.get('cities')]
+
+        for city in cities:
+            for place in city.places:
+                if place not in places:
+                    places.append(place)
+
+    if not places:
+        places = storage.all(Place)
+        places = [place for place in places.values()]
+
+    if body_r.get('amenities'):
+        ams = [storage.get("Amenity", id) for id in body_r.get('amenities')]
+        i = 0
+        limit = len(places)
+        HBNB_API_HOST = getenv('HBNB_API_HOST')
+        HBNB_API_PORT = getenv('HBNB_API_PORT')
+
+        port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
+        first_url = "http://0.0.0.0:{}/api/v1/places/".format(port)
+        while i < limit:
+            place = places[i]
+            url = first_url + '{}/amenities'
+            req = url.format(place.id)
+            response = requests.get(req)
+            am_d = json.loads(response.text)
+            amenities = [storage.get("Amenity", o['id']) for o in am_d]
+            for amenity in ams:
+                if amenity not in amenities:
+                    places.pop(i)
+                    i -= 1
+                    limit -= 1
+                    break
+            i += 1
+    return jsonify([place.to_dict() for place in places])

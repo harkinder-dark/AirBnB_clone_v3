@@ -27,7 +27,7 @@ def users():
                   strict_slashes=False)
 def get_user(user_id):
     """get elements by id"""
-    user = storage.get(User, user_id)
+    user = storage.get("User", user_id)
     if not user:
         abort(404)
     return jsonify(user.to_dict())
@@ -37,7 +37,7 @@ def get_user(user_id):
                  strict_slashes=False)
 def del_user(user_id):
     """delete element by id"""
-    user = storage.get(User, user_id)
+    user = storage.get("User", user_id)
     if not user:
         abort(404)
     user.delete()
@@ -65,7 +65,7 @@ def post_users():
                  strict_slashes=False)
 def put_user(user_id):
     """modified"""
-    user = storage.get(User, user_id)
+    user = storage.get("User", user_id)
     if not user:
         abort(404)
     new_user = request.get_json()

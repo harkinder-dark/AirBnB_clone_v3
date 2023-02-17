@@ -20,7 +20,7 @@ from flask import request
                  strict_slashes=False)
 def get_reviews(place_id):
     """get all reviews to place"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if not place:
         abort(404)
     return jsonify([obj.to() for obj in place.reviews])
@@ -30,7 +30,7 @@ def get_reviews(place_id):
                  strict_slashes=False)
 def reviewsid(review_id):
     """get review"""
-    review = storage.get(Review, review_id)
+    review = storage.get("Review", review_id)
     if not review:
         abort(404)
     return jsonify(review.to_dict())
@@ -40,7 +40,7 @@ def reviewsid(review_id):
                  strict_slashes=False)
 def del_review(review_id):
     """delete review"""
-    review = storage.get(Review, review_id)
+    review = storage.get("Review", review_id)
     if not review:
         abort(404)
     review.delete()
@@ -52,7 +52,7 @@ def del_review(review_id):
                  strict_slashes=False)
 def post_review(place_id):
     """add new review"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if not place:
         abort(404)
     new_review = request.get_json()
@@ -61,7 +61,7 @@ def post_review(place_id):
     if 'user_id' not in new_review:
         abort(400, "Missing user_id")
     user_id = new_review['user_id']
-    if not storage.get(User, user_id):
+    if not storage.get("User", user_id):
         abort(404)
     if 'text' not in new_review:
         abort(400, "Missing text")
@@ -76,7 +76,7 @@ def post_review(place_id):
                  strict_slashes=False)
 def put_review(review_id):
     """modified"""
-    review = storage.get(Review, review_id)
+    review = storage.get("Review", review_id)
     if not review:
         abort(404)
     chrev = request.get_json()

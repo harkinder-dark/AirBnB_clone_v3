@@ -28,7 +28,7 @@ def states():
                   strict_slashes=False)
 def f_state_id(state_id):
     """Retrieves a State object"""
-    stateid = storage.get(State, state_id)
+    stateid = storage.get("State", state_id)
     if not stateid:
         abort(404)
     return jsonify(stateid.to_dict())
@@ -38,7 +38,7 @@ def f_state_id(state_id):
                  strict_slashes=False)
 def d_state_id(state_id):
     """Deletes a State object"""
-    stateid = storage.get(State, state_id)
+    stateid = storage.get("State", state_id)
     if not stateid:
         abort(404)
     stateid.delete()
@@ -64,7 +64,7 @@ def post_states():
                  strict_slashes=False)
 def put_states(state_id):
     """Updates a State object"""
-    stateid = storage.get(State, state_id)
+    stateid = storage.get("State", state_id)
     if not stateid:
         abort(404)
     chnew = request.get_json()

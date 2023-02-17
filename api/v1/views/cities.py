@@ -20,7 +20,7 @@ from flask import request
 def cities(state_id):
     """Retrieves the list of all City objects
     of a State:"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
     return jsonify([obj.to_dict() for obj in state.cities])
@@ -30,7 +30,7 @@ def cities(state_id):
                  strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object"""
-    citie = storage.get(City, city_id)
+    citie = storage.get("City", city_id)
     if not citie:
         abort(404)
     return jsonify(citie.to_dict())
@@ -40,7 +40,7 @@ def get_city(city_id):
                  strict_slashes=False)
 def del_city(city_id):
     """Deletes a City object:"""
-    citie = storage.get(City, city_id)
+    citie = storage.get("City", city_id)
     if not citie:
         abort(404)
     citie.delete()
@@ -52,7 +52,7 @@ def del_city(city_id):
                  strict_slashes=False)
 def post_city(state_id):
     """Creates a City"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
     new_city = request.get_json()
@@ -70,7 +70,7 @@ def post_city(state_id):
                  strict_slashes=False)
 def put_city(city_id):
     """Updates a City object"""
-    citie = storage.get(City, city_id)
+    citie = storage.get("City", city_id)
     if not citie:
         abort(404)
     chcity = request.get_json()

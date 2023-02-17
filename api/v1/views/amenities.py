@@ -28,7 +28,7 @@ def amenities():
                  strict_slashes=False)
 def amenity(amenity_id):
     """get element by id"""
-    amenityId = storage.get(Amenity, amenity_id)
+    amenityId = storage.get("Amenity", amenity_id)
     if not amenityId:
         abort(404)
     return jsonify(amenityId.to_dict())
@@ -38,7 +38,7 @@ def amenity(amenity_id):
                  strict_slashes=False)
 def del_amenity(amenity_id):
     """delete element"""
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
     if not amenityId:
         abort(404)
     amenity.delete()
@@ -64,7 +64,7 @@ def post_amenity():
                  strict_slashes=False)
 def put_amenity(amenity_id):
     """modified database"""
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
     if not amenity:
         abort(404)
     chamenity = request.get_json()
