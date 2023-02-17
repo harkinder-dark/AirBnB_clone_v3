@@ -1,26 +1,9 @@
 #!/usr/bin/python3
 """
 Create a folder api at the root of the project
-                with an empty file __init__.py
+with an empty file __init__.py
 Create a folder v1 inside api:
-    create an empty file __init__.py
-    create a file app.py:
-        create a variable app, instance of Flask
-        import storage from models
-        import app_views from api.v1.views
-        register the blueprint app_views to your
-                                Flask instance app
-        declare a method to handle @app.teardown_appcontext
-                                that calls storage.close()
-        inside if __name__ == "__main__":,
-                run your Flask server (variable app) with:
-            host = environment variable HBNB_API_HOST or 0.0.0.0
-                                                    if not defined
-            port = environment variable HBNB_API_PORT or 5000
-                                                if not defined
-            threaded=True
 """
-
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
