@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-"""Create a folder api at the root of the project"""
-
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
