@@ -72,7 +72,7 @@ def post_place(city_id):
     return make_response(jsonify(place.to_dict()), 201)
 
 
-@app_views.route('/places/<place_id>',method=['PUT'],
+@app_views.route('/places/<place_id>', method=['PUT'],
                  strict_slashes=False)
 def put_place(place_id):
     """modified"""
@@ -97,11 +97,10 @@ def places_search():
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    
     if body is None or (
             not body.get('states') and
             not body.get('cities') and
             not body.get('amenities')
     ):
-    places = storage.all(Place)
+        places = storage.all(Place)
     return jsonify([place.to_dict() for place in palces.values()])

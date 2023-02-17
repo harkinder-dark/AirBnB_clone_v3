@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Create a folder api at the root of the project 
+Create a folder api at the root of the project
                 with an empty file __init__.py
 Create a folder v1 inside api:
     create an empty file __init__.py
