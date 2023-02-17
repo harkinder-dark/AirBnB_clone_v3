@@ -52,7 +52,7 @@ def post_states():
     new = request.get_json()
     if not new:
         abort(404, "Not a JSON")
-    if 'name' in not new:
+    if 'name' not in new:
         abort(400, "Missing name")
     state = State(**new)
     storage.new(state)

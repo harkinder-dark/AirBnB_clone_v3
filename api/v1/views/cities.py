@@ -58,7 +58,7 @@ def post_city(state_id):
     new_city = request.get_json()
     if not new_city:
         abort(400, "Not a JSON")
-    if 'name' in not new_city:
+    if 'name' not in new_city:
         abort(400, "Missing name")
     citie = City(**new_city)
     storage.new(citie)
