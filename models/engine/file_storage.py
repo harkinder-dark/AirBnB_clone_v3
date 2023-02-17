@@ -84,5 +84,4 @@ class FileStorage:
         if cls:
             return len([obj for obj in self.__objects.values()
                        if obj.__class__.__name__ == cls])
-        else:
-            return len(self.__objects)
+        return len(self.__objects)
