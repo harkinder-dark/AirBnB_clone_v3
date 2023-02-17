@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""module contains app.py"""
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
@@ -14,7 +15,7 @@ swagger = Swagger(app)
 
 
 @app.teardown_appcontext
-def teardown(exc):
+def teardown(exception):
     """closing"""
     storage.close()
 
