@@ -1,10 +1,6 @@
 #!/usr/bin/python3
-"""
-GET
-DELETE
-POST
-PUT
-"""
+"""create module places for airbnb clone"""
+
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
