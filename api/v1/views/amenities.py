@@ -1,23 +1,17 @@
 #!/usr/bin/python3
-"""
-Create a new view for Amenity
-Retrieves the list of all Amenity objects
-Retrieves a Amenity object
-Deletes a Amenity object:
-Creates a Amenity:
-Updates a Amenity objec
-"""
-from flask import Flask, jsonify
+"""Create a new view for Amenity
+Updates a Amenity objec"""
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
-from flask import abort
 from flask import make_response
-from flask import request
+from flasgger.utils import swag_from
 
 
 @app_views.route('/amenities', method=['GET'],
                  strict_slashes=False)
+@swag_from('dockers/amenity/all_amenities.yml')
 def amenities():
     """list all elements"""
     d_amenities = storage.all(Amenity)
@@ -26,6 +20,7 @@ def amenities():
 
 @app_views.route('/amenities/<amenity_id>', method=['GET'],
                  strict_slashes=False)
+@swag_from('dockers/amenity/get_amenity.yml', methods=['GET'])
 def amenity(amenity_id):
     """get element by id"""
     amenityId = storage.get("Amenity", amenity_id)
@@ -36,6 +31,7 @@ def amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', method=['DELETE'],
                  strict_slashes=False)
+@swag_from('dockers/amenity/delete_amenity.yml', methods=['DELETE'])
 def del_amenity(amenity_id):
     """delete element"""
     amenity = storage.get("Amenity", amenity_id)
@@ -47,6 +43,7 @@ def del_amenity(amenity_id):
 
 
 @app_views.route('/amenities', method=['POST'], strict_slashes=False)
+@swag_from('dockers/amenity/post_amenity.yml', methods=['POST'])
 def post_amenity():
     """add new element"""
     new_amenity = request.get_json()
@@ -55,13 +52,13 @@ def post_amenity():
     if 'name' not in new_amenity:
         abort(400, "Missing name")
     amenity = Amenity(**new_amenity)
-    storage.new(amenity)
     storage.save()
     return make_response(jsonify(amenity/to_dict()), 201)
 
 
 @app_views.route('/amenities/<amenity_id>', method=['PUT'],
                  strict_slashes=False)
+@swag_from('dockers/amenity/put_amenity.yml', methods=['PUT'])
 def put_amenity(amenity_id):
     """modified database"""
     amenity = storage.get("Amenity", amenity_id)

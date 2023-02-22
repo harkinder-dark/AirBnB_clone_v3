@@ -1,22 +1,17 @@
 #!/usr/bin/python3
-"""
-Create a new view for User object
-Retrieves the list of all User objects
-Retrieves a User object
-Deletes a User object
-Creates a User
-Updates a User object
-"""
-from flask import Flask, jsonify
+"""Create a new view for User object
+Retrieves the list of all User objects"""
+
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.user import User
-from flask import abort
 from flask import make_response
-from flask import request
+from flasgger.utils import swag_from
 
 
 @app_views.route('/users', method=['GET'], strict_slashes=False)
+@swag_from('dockers/user/all_users.yml', methods=['GET'])
 def users():
     """list all elemets"""
     user = storage.all(User)
@@ -25,6 +20,7 @@ def users():
 
 @app_views.rouute('/users/<user_id>', method=['GET'],
                   strict_slashes=False)
+@swag_from('dockers/user/get_user.yml', methods=['GET'])
 def get_user(user_id):
     """get elements by id"""
     user = storage.get("User", user_id)
@@ -35,6 +31,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', method=['DELETE'],
                  strict_slashes=False)
+@swag_from('dockers/user/delete_user.yml', methods=['DELETE'])
 def del_user(user_id):
     """delete element by id"""
     user = storage.get("User", user_id)
@@ -46,6 +43,7 @@ def del_user(user_id):
 
 
 @app_views.route('/users', method=['POST'], strict_slashes=False)
+@swag_from('dockers/user/post_user.yml', methods=['POST'])
 def post_users():
     """add element"""
     new_user = request.get_json()
@@ -63,6 +61,7 @@ def post_users():
 
 @app_views.route('/users/<user_id>', method=['PUT'],
                  strict_slashes=False)
+@swag_from('dockers/user/put_user.yml', methods=['PUT'])
 def put_user(user_id):
     """modified"""
     user = storage.get("User", user_id)
