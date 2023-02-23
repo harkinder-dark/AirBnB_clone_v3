@@ -23,7 +23,7 @@ def users():
     return jsonify([obj.to_dict() for obj in user.values()])
 
 
-@app_views.rouute('/users/<user_id>', method=['GET'],
+@app_views.route('/users/<user_id>', method=['GET'],
                   strict_slashes=False)
 def get_user(user_id):
     """get elements by id"""
