@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 """create module places for airbnb clone"""
 
-from flask import jsonify, abort, request 
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
-from models.city import City
 from models.place import Place
+from models.city import City
 from models.user import User
-from models.state import State
-from models.amenity import Amenity
-from flasgger.utils import swag_from
+from flask import abort
 from flask import make_response
+from flask import request
 
 
 @app_views.route('/cities/<city_id>/places', method=['GET'],
                  strict_slashes=False)
-@swag_from('dockers/place/get_places.yml', methods=['GET'])
 def get_places(city_id):
     """get all Place to city"""
     city = storage.get("City", city_id)
@@ -26,7 +24,6 @@ def get_places(city_id):
 
 @app_views.route('/places/<place_id>', method=['GET'],
                  strict_slashes=False)
-@swag_from('dockers/place/get_place.yml', methods=['GET'])
 def placeid(place_id):
     """get place element"""
     place = storage.get("Place", place_id)
@@ -37,7 +34,6 @@ def placeid(place_id):
 
 @app_views.route('/places/<place_id>', method=['DELETE'],
                  strict_slashes=False)
-@swag_from('dockers/place/delete_place.yml', methods=['DELETE'])
 def del_place(place_id):
     """delete place element"""
     place = storage.get("Place", place_id)
@@ -50,7 +46,6 @@ def del_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', method=['POST'],
                  strict_slashes=False)
-@swag_from('dockers/place/post_place.yml', methods=['POST'])
 def post_place(city_id):
     """post place to city"""
     city = storage.get("City", city_id)
@@ -68,13 +63,13 @@ def post_place(city_id):
         abort(400, "Missing name")
     place = Place(**new_place)
     setattr(place, 'city_id', city_id)
+    storage.new(place)
     storage.save()
     return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', method=['PUT'],
                  strict_slashes=False)
-@swag_from('dockers/place/put_place.yml', methods=['PUT'])
 def put_place(place_id):
     """modified"""
     place = storage.get("Place", place_id)
@@ -93,7 +88,6 @@ def put_place(place_id):
 
 @app_views.route('/places_search', method=['POST'],
                  strict_slashes=False)
-@swag_from('dockers/place/post_search.yml', methods=['POST'])
 def places_search():
     """Good, but not enough"""
     body = request.get_json()

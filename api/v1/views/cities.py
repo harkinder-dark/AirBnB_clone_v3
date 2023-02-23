@@ -1,17 +1,22 @@
 #!usr/bin/python3
-"""Retrieves the list of all City objects of a State"""
-from flask import jsonify, request, abort
+"""
+Same as State, create a new view for City objects
+        that handles all default RESTFul API actions:
+Retrieves the list of all City objects of a State
+
+"""
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from models.city import City 
-from flask import make_response 
-from flasgger.utils import swag_from
+from models.city import City
+from flask import abort
+from flask import make_response
+from flask import request
 
 
 @app_views.route('/states/<state_id>/cities', method=['GET'],
                  strict_slashes=False)
-@swag_from('dockers/city/cities_by_state.yml', methods=['GET'])
 def cities(state_id):
     """Retrieves the list of all City objects
     of a State:"""
@@ -23,7 +28,6 @@ def cities(state_id):
 
 @app_views.route('/cities/<city_id>', method=['GET'],
                  strict_slashes=False)
-@swag_from('dockers/city/get_city.yml', methods=['GET'])
 def get_city(city_id):
     """Retrieves a City object"""
     citie = storage.get("City", city_id)
@@ -34,7 +38,6 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', method=['DELETE'],
                  strict_slashes=False)
-@swag_from('dockers/city/delete_city.yml', methods=['DELETE'])
 def del_city(city_id):
     """Deletes a City object:"""
     citie = storage.get("City", city_id)
@@ -47,7 +50,6 @@ def del_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', method=['POST'],
                  strict_slashes=False)
-@swag_from('dockers/city/post_city.yml', methods=['POST'])
 def post_city(state_id):
     """Creates a City"""
     state = storage.get("State", state_id)
@@ -66,7 +68,6 @@ def post_city(state_id):
 
 @app_views.route('/cities/<city_id>', method=['PUT'],
                  strict_slashes=False)
-@swag_from('dockers/city/put_city.yml', methods=['PUT'])
 def put_city(city_id):
     """Updates a City object"""
     citie = storage.get("City", city_id)

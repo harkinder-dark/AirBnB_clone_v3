@@ -1,16 +1,23 @@
 #!/usr/bin/python3
-"""Create a new view for State objects that handles all
-Updates a State object: PUT /api/v1/states/<state_id>"""
-from flask import jsonify, abort, request
+"""
+Create a new view for State objects that handles all
+                        default RESTFul API actions:
+Retrieves the list of all State objects: GET /api/v1/states
+Retrieves a State object: GET /api/v1/states/<state_id>
+Deletes a State object:: DELETE /api/v1/states/<state_id>
+Creates a State: POST /api/v1/states
+Updates a State object: PUT /api/v1/states/<state_id>
+"""
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 from models.state import State
+from flask import abort
 from flask import make_response
-from flasgger.utils import swag_from
+from flask import request
 
 
 @app_views.route('/states', method=['GET'], strict_slashes=False)
-@swag_from('dockers/state/get_state.yml', methods=['GET'])
 def states():
     """objects that handles all default RESTFul API actions"""
     state = storage.all(State)
@@ -19,7 +26,6 @@ def states():
 
 @app_views.route('/states/<state_id>', method=['GET'],
                   strict_slashes=False)
-@swag_from('dockers/state/get_state.yml', methods=['GET'])
 def f_state_id(state_id):
     """Retrieves a State object"""
     stateid = storage.get("State", state_id)
@@ -30,7 +36,6 @@ def f_state_id(state_id):
 
 @app_views.route('/states/<state_id>', method=['DELETE'],
                  strict_slashes=False)
-@swag_from('dockers/state/delete_state.yml', methods=['DELETE'])
 def d_state_id(state_id):
     """Deletes a State object"""
     stateid = storage.get("State", state_id)
@@ -42,7 +47,6 @@ def d_state_id(state_id):
 
 
 @app_views.route('/states', method=['POST'], strict_slashes=False)
-@swag_from('dockers/state/post_state.yml', methods=['POST'])
 def post_states():
     """You must use request.get_json from Flas"""
     new = request.get_json()
@@ -58,7 +62,6 @@ def post_states():
 
 @app_views.route('/states/<state_id>', method=['PUT'],
                  strict_slashes=False)
-@swag_from('dockers/state/put_state.yml', methods=['PUT'])
 def put_states(state_id):
     """Updates a State object"""
     stateid = storage.get("State", state_id)

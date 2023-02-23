@@ -1,19 +1,21 @@
 #!/usr/bin/python3
-"""GET, DELETE, POST
 """
-from flask import jsonify, abort, request
+GET
+DELETE
+POST
+"""
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
 from models.amenity import Amenity
+from flask import abort
 from flask import make_response
-from flasgger.utils import swag_from
+from flask import request
 
 
 @app_views.route('/places/<place_id>/amenities', method=['GET'],
                  strict_slashes=False)
-@swag_from('dockers/place_amenity/get_places_amenities.yml',
-           methods=['GET'])
 def get_places_amenities(place_id):
     """get element"""
     place = storage.get("Place", place_id)
@@ -28,8 +30,6 @@ def get_places_amenities(place_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  method=['DELETE'], strict_slashes=False)
-@swag_from('dockers/place_amenity/delete_place_amenities.yml',
-           methods=['DELETE'])
 def del_places_amenities(place_id, amenity_id):
     """deleting"""
     place = storage.get("Place", place_id)
@@ -46,6 +46,7 @@ def del_places_amenities(place_id, amenity_id):
             abort(404)
         index = place.amenity_ids.index(amenity_id)
         place.amenity_ids.pop(index)
+
     amenity.delete()
     storage.save()
     return make_response(jsonify({}), 200)
@@ -53,8 +54,6 @@ def del_places_amenities(place_id, amenity_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  method=['POST'], strict_slashes=False)
-@swag_from('dockers/place_amenity/post_place_amenities.yml',
-           methods=['POST'])
 def post_places_amenities(place_id, amenity_id):
     """add"""
     place = storage.get("Place", place_id)
