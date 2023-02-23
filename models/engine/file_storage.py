@@ -73,7 +73,6 @@ class FileStorage:
         or None if not found"""
         if cls not in classes.values():
             return None
-        all_cls = 
         for value in models.storage.all(cls).values():
             if value.id == id:
                 return value
