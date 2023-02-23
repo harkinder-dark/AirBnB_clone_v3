@@ -2,6 +2,7 @@
 """Contains the FileStorage class"""
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -70,9 +71,12 @@ class FileStorage:
     def get(self, cls, id):
         """Returns the object based on the class and its ID,
         or None if not found"""
-        key = "{}.{}".format(cls, id)
-        if key in self.__objects.keys():
-            return self.__objects[key]
+        if cls not in classes.values():
+            return None
+        all_cls = 
+        for value in models.storage.all(cls).values():
+            if value.id == id:
+                return value
         return None
 
     def count(self, cls=None):
