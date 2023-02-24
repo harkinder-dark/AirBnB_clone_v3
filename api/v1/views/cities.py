@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """
 Same as State, create a new view for City objects
         that handles all default RESTFul API actions:
