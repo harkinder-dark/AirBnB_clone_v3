@@ -3,13 +3,11 @@
 Create a new view for State objects that handles all
 Updates a State object: PUT /api/v1/states/<state_id>
 """
-from flask import Flask, jsonify
+from flask import jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from flask import abort
-from flask import make_response
-from flask import request
+from flask import abort, make_response
 
 
 @app_views.route('/states', method=['GET'], strict_slashes=False)
